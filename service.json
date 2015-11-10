@@ -1,0 +1,19 @@
+{
+	"kind": "Service",
+	"apiVersion": "v1",
+    "metadata": {
+        "name": "ajces-service"
+    },
+    "spec": {
+        "selector": {
+            "app": "ajces"
+        },
+        "ports": [
+            {
+                "protocol": "TCP",
+                "port": 443,
+                "targetPort": 8443
+            }
+        ]
+    }
+}

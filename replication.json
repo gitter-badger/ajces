@@ -1,0 +1,85 @@
+{
+  "apiVersion": "v1",
+  "kind": "ReplicationController",
+  "metadata": {
+    "name": "ajces-controller",
+    "labels": {
+			"state": "serving"
+		}
+  },
+  "spec": {
+    "replicas": 1,
+    "selector": {
+      "app":"ajces"
+    },
+    "template": {
+      "metadata": {
+        "labels": {
+          "app":"ajces"
+        }
+      },
+      "spec": {
+        "volumes": [
+        	{
+        		"name": "secrets",
+        		"secret": {
+							"secretName": "ajces-crypto"
+						}
+        	}
+        ],
+        "containers": [
+          {
+            "name": "frontend",
+            "image": "andyj/ajces-node",
+            "volumeMounts": [{
+            	"name": "secrets",
+            	"mountPath": "/etc/ajces",
+            	"readOnly": true
+						}],
+            "ports": [
+              {
+                "containerPort": 8080,
+                "protocol": "TCP"
+              }
+            ],
+            "imagePullPolicy": "IfNotPresent"
+          },
+					{
+						"name": "api",
+						"image": "andyj/ajces-node",
+            "volumeMounts": [{
+            	"name": "secrets",
+            	"mountPath": "/etc/ajces",
+            	"readOnly": true
+						}],
+						"ports": [
+							{
+								"containerPort": 8888,
+								"protocol": "TCP
+							}
+						],
+						"imagePullPolicy": "IfNotPresent"
+					},
+					{
+						"name": "nginx",
+						"image": "andyj/ajces-nginx",
+            "volumeMounts": [{
+            	"name": "secrets",
+            	"mountPath": "/etc/ajces",
+            	"readOnly": true
+						}],
+						"ports": [
+							{
+								"containerPort": 8443,
+								"protocol": "TCP
+							}
+						],
+						"imagePullPolicy": "IfNotPresent"
+					}
+        ],
+        "restartPolicy": "Always",
+        "dnsPolicy": "ClusterFirst"
+      }
+    }
+  }
+}
