@@ -1,8 +1,5 @@
 # circle.yml
 machine:
-  # work around for google container engine still being on 1.6.2 docker version
-  pre:
-    - sudo curl -L -o /usr/bin/docker 'https://s3-external-1.amazonaws.com/circle-downloads/docker-1.6.x-circleci' && sudo chmod 0755 /usr/bin/docker 
   environment:
     CLOUDSDK_CORE_DISABLE_PROMPTS: 1
     CLOUDSDK_PYTHON_SITEPACKAGES: 1

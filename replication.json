@@ -25,7 +25,13 @@
         		"secret": {
 							"secretName": "ajces-crypto"
 						}
-        	}
+        	},
+					{
+						"name": "tls",
+						"secret": {
+							"secretName": "ajces-tls"
+						}
+					}
         ],
         "containers": [
           {
@@ -64,7 +70,7 @@
 						"name": "nginx",
 						"image": "andyj/ajces-nginx",
             "volumeMounts": [{
-            	"name": "secrets",
+            	"name": "tls",
             	"mountPath": "/etc/ajces",
             	"readOnly": true
 						}],
